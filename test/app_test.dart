@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xarid_market/core/constants/app_constants.dart';
 import 'package:xarid_market/core/utils/formatters.dart';
+import 'package:xarid_market/core/utils/search.dart';
 import 'package:xarid_market/models/order.dart';
 import 'package:xarid_market/models/order_item.dart';
 import 'package:xarid_market/models/product.dart';
-import 'package:xarid_market/providers/app_providers.dart';
 import 'package:xarid_market/services/seed_data.dart';
 
 void main() {
