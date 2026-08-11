@@ -1,0 +1,32 @@
+# Xarid — oflayn marketplace (Flutter)
+
+# Flutter/Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+*.iml
+.idea/
+.vscode/
+*.log
+
+# Android
+android/local.properties
+android/.gradle/
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/key.properties
+*.keystore
+*.jks
+
+# macOS / Windows / Linux / Web
+.macos/
+.windows/
+.linux/
+.web/
+ios/
+
+# Boshqa
+.DS_Store
