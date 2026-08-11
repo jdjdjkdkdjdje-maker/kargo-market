@@ -15,7 +15,6 @@ dependencies:
 
   # Lokal ma'lumotlar bazasi (server yo'q — hammasi telefon xotirasida)
   hive: ^2.2.3
-  hive_flutter: ^1.1.0
   path_provider: ^2.1.4
 
   cupertino_icons: ^1.0.8

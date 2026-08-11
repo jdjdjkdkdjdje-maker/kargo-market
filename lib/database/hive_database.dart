@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// Hive orqali lokal ma'lumotlar bazasi.
 ///
@@ -23,7 +23,9 @@ class HiveDatabase {
   static late Box settingsBox;
 
   static Future<void> init() async {
-    await Hive.initFlutter();
+    // Hujjatlar papkasi telefonda lokal saqlanadi.
+    final dir = await getApplicationDocumentsDirectory();
+    Hive.init(dir.path);
 
     productsBox = await Hive.openBox(productsBoxName);
     cartBox = await Hive.openBox(cartBoxName);
