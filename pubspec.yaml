@@ -14,7 +14,7 @@ dependencies:
   flutter_riverpod: ^2.6.1
 
   # Lokal ma'lumotlar bazasi (server yo'q — hammasi telefon xotirasida)
-  hive: ^2.2.3
+  # JSON fayllarga asoslangan o'z lokal bazamiz ishlatiladi (path_provider orqali)
   path_provider: ^2.1.4
 
   cupertino_icons: ^1.0.8

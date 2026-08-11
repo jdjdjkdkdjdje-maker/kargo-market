@@ -1,12 +1,12 @@
-import '../database/hive_database.dart';
+import '../database/local_database.dart';
 import '../models/product.dart';
 
-/// Mahsulotlar bilan ishlash (Hive lokal bazasi).
+/// Mahsulotlar bilan ishlash (lokal JSON bazasi).
 class ProductRepository {
   static const String _key = 'items';
 
   List<Product> getAll() {
-    final raw = HiveDatabase.productsBox.get(_key);
+    final raw = LocalDatabase.productsBox.get(_key);
     if (raw == null) return [];
     return (raw as List)
         .map((e) => Product.fromMap(e as Map<dynamic, dynamic>))
@@ -20,7 +20,7 @@ class ProductRepository {
     return null;
   }
 
-  void save(Product product) {
+  Future<void> save(Product product) async {
     final list = getAll();
     final index = list.indexWhere((e) => e.id == product.id);
     if (index >= 0) {
@@ -28,15 +28,15 @@ class ProductRepository {
     } else {
       list.add(product);
     }
-    HiveDatabase.productsBox.put(_key, list.map((e) => e.toMap()).toList());
+    await LocalDatabase.productsBox.put(_key, list.map((e) => e.toMap()).toList());
   }
 
-  void delete(String id) {
+  Future<void> delete(String id) async {
     final list = getAll().where((e) => e.id != id).toList();
-    HiveDatabase.productsBox.put(_key, list.map((e) => e.toMap()).toList());
+    await LocalDatabase.productsBox.put(_key, list.map((e) => e.toMap()).toList());
   }
 
-  void replaceAll(List<Product> products) {
-    HiveDatabase.productsBox.put(_key, products.map((e) => e.toMap()).toList());
+  Future<void> replaceAll(List<Product> products) async {
+    await LocalDatabase.productsBox.put(_key, products.map((e) => e.toMap()).toList());
   }
 }

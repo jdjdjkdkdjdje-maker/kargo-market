@@ -38,7 +38,7 @@ class Order {
 
   Map<String, dynamic> toMap() => {
         'id': id,
-        'createdAt': createdAt,
+        'createdAt': createdAt.toIso8601String(),
         'items': items.map((e) => e.toMap()).toList(),
         'productsTotal': productsTotal,
         'discount': discount,
@@ -50,25 +50,35 @@ class Order {
         'comment': comment,
         'paymentMethod': paymentMethod,
         'status': status,
-        'statusUpdatedAt': statusUpdatedAt,
+        'statusUpdatedAt': statusUpdatedAt?.toIso8601String(),
       };
 
-  factory Order.fromMap(Map<dynamic, dynamic> map) => Order(
-        id: map['id'] as String,
-        createdAt: map['createdAt'] as DateTime,
-        items: (map['items'] as List)
-            .map((e) => OrderItem.fromMap(e as Map<dynamic, dynamic>))
-            .toList(),
-        productsTotal: (map['productsTotal'] as num).toInt(),
-        discount: (map['discount'] as num?)?.toInt() ?? 0,
-        deliveryFee: (map['deliveryFee'] as num?)?.toInt() ?? 0,
-        total: (map['total'] as num).toInt(),
-        customerName: map['customerName'] as String,
-        phone: map['phone'] as String,
-        address: map['address'] as String,
-        comment: map['comment'] as String? ?? '',
-        paymentMethod: map['paymentMethod'] as String? ?? 'Naqd pul',
-        status: map['status'] as String? ?? 'Qabul qilindi',
-        statusUpdatedAt: map['statusUpdatedAt'] as DateTime?,
-      );
+  factory Order.fromMap(Map<dynamic, dynamic> map) {
+    final rawCreated = map['createdAt'];
+    final rawUpdated = map['statusUpdatedAt'];
+    return Order(
+      id: map['id'] as String,
+      createdAt: rawCreated is DateTime
+          ? rawCreated
+          : DateTime.parse(rawCreated as String),
+      items: (map['items'] as List)
+          .map((e) => OrderItem.fromMap(e as Map<dynamic, dynamic>))
+          .toList(),
+      productsTotal: (map['productsTotal'] as num).toInt(),
+      discount: (map['discount'] as num?)?.toInt() ?? 0,
+      deliveryFee: (map['deliveryFee'] as num?)?.toInt() ?? 0,
+      total: (map['total'] as num).toInt(),
+      customerName: map['customerName'] as String,
+      phone: map['phone'] as String,
+      address: map['address'] as String,
+      comment: map['comment'] as String? ?? '',
+      paymentMethod: map['paymentMethod'] as String? ?? 'Naqd pul',
+      status: map['status'] as String? ?? 'Qabul qilindi',
+      statusUpdatedAt: rawUpdated == null
+          ? null
+          : (rawUpdated is DateTime
+              ? rawUpdated
+              : DateTime.parse(rawUpdated as String)),
+    );
+  }
 }

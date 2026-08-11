@@ -1,15 +1,15 @@
-import '../database/hive_database.dart';
+import '../database/local_database.dart';
 import '../models/app_settings.dart';
 
-/// Sozlamalar bilan ishlash (Hive lokal bazasi).
+/// Sozlamalar bilan ishlash (lokal JSON bazasi).
 class SettingsRepository {
   static const String _key = 'data';
 
   AppSettings get() {
-    return AppSettings.fromMap(HiveDatabase.settingsBox.get(_key) as Map?);
+    return AppSettings.fromMap(LocalDatabase.settingsBox.get(_key) as Map?);
   }
 
-  void save(AppSettings settings) {
-    HiveDatabase.settingsBox.put(_key, settings.toMap());
+  Future<void> save(AppSettings settings) async {
+    await LocalDatabase.settingsBox.put(_key, settings.toMap());
   }
 }

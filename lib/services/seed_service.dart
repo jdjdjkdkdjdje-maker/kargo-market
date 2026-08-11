@@ -1,4 +1,4 @@
-import '../database/hive_database.dart';
+import '../database/local_database.dart';
 import '../repositories/product_repository.dart';
 import 'seed_data.dart';
 
@@ -9,12 +9,12 @@ class SeedService {
   static const String _seededKey = 'seeded_v1';
 
   static Future<void> ensureSeeded() async {
-    final settings = HiveDatabase.settingsBox;
+    final settings = LocalDatabase.settingsBox;
     final alreadySeeded = settings.get(_seededKey) as bool? ?? false;
     if (alreadySeeded) return;
 
     final repo = ProductRepository();
-    repo.replaceAll(SeedData.products());
+    await repo.replaceAll(SeedData.products());
 
     await settings.put(_seededKey, true);
   }
@@ -22,11 +22,11 @@ class SeedService {
   /// Demo ma'lumotlarni qayta tiklash (sozlamalar va profil saqlanadi).
   static Future<void> resetDemoData() async {
     final repo = ProductRepository();
-    repo.replaceAll(SeedData.products());
+    await repo.replaceAll(SeedData.products());
 
-    await HiveDatabase.cartBox.clear();
-    await HiveDatabase.ordersBox.clear();
-    await HiveDatabase.favoritesBox.clear();
-    await HiveDatabase.settingsBox.put(_seededKey, true);
+    await LocalDatabase.cartBox.clear();
+    await LocalDatabase.ordersBox.clear();
+    await LocalDatabase.favoritesBox.clear();
+    await LocalDatabase.settingsBox.put(_seededKey, true);
   }
 }

@@ -21,7 +21,7 @@
 
 ## 🗄 Ma'lumotlar saqlash
 
-- **Hive** lokal bazasi — hamma narsa telefon xotirasida
+- **JSON-fayl** lokal bazasi — hamma narsa telefon xotirasida
 - Savatcha, buyurtmalar, profil, sevimlilar, mahsulot o'zgarishlari va sozlamalar saqlanib qoladi
 - Ilova yopilganda va telefon qayta ishga tushirilganda ham ma'lumotlar yo'qolmaydi
 
@@ -29,7 +29,7 @@
 
 - **Flutter** (Dart) — Android APK
 - **Riverpod** — state management
-- **Hive** — lokal ma'lumotlar bazasi
+- **JSON-fayl** — lokal ma.lumotlar bazasi
 - Barcha rasmlar loyihaga **lokal asset** sifatida kiritilgan
 
 ## 🔧 O'rnatish va qurish
@@ -77,7 +77,7 @@ mumkin. Barcha o'zgarishlar lokal bazaga yoziladi.
 lib/
 ├── core/          # mavzu, doimiylar, yordamchi funksiyalar
 ├── models/        # Product, CartItem, Order, ProfileData...
-├── database/      # Hive lokal baza
+├── database/      # Lokal JSON baza
 ├── services/      # demo ma'lumotlar, xabarlar
 ├── repositories/  # ma'lumotlar bilan ishlash qatlami
 ├── providers/     # Riverpod state management

@@ -49,14 +49,14 @@ class ProductsNotifier extends AsyncNotifier<List<Product>> {
   }
 
   Future<void> addProduct(Product product) async {
-    ref.read(productRepoProvider).save(product);
+    await ref.read(productRepoProvider).save(product);
     final current = [...state.value ?? []];
     current.add(product);
     state = AsyncData(current);
   }
 
   Future<void> updateProduct(Product product) async {
-    ref.read(productRepoProvider).save(product);
+    await ref.read(productRepoProvider).save(product);
     final current = [...state.value ?? []];
     final index = current.indexWhere((e) => e.id == product.id);
     if (index >= 0) {
@@ -68,7 +68,7 @@ class ProductsNotifier extends AsyncNotifier<List<Product>> {
   }
 
   Future<void> deleteProduct(String id) async {
-    ref.read(productRepoProvider).delete(id);
+    await ref.read(productRepoProvider).delete(id);
     final current = [...state.value ?? []].where((e) => e.id != id).toList();
     state = AsyncData(current);
 
@@ -335,7 +335,7 @@ class OrdersNotifier extends Notifier<List<Order>> {
     for (final item in items) {
       final p = productRepo.getById(item.productId);
       if (p != null && p.stock >= item.quantity) {
-        productRepo.save(p.copyWith(stock: p.stock - item.quantity));
+        await productRepo.save(p.copyWith(stock: p.stock - item.quantity));
       }
     }
     ref.invalidate(productsProvider);

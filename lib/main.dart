@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/constants/app_constants.dart';
 import 'core/theme/app_theme.dart';
-import 'database/hive_database.dart';
+import 'database/local_database.dart';
 import 'providers/app_providers.dart';
 import 'screens/main_shell.dart';
 import 'services/seed_service.dart';
@@ -13,7 +13,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Lokal bazani ochish (server kerak emas — hammasi telefonda).
-  await HiveDatabase.init();
+  await LocalDatabase.init();
 
   // Birinchi ochilishda demo mahsulotlarni yaratish.
   await SeedService.ensureSeeded();
