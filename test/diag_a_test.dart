@@ -22,7 +22,7 @@ void main() {
     expect(_diagNotifierProvider, isNotNull);
     const s = AppSettings();
     expect(s.themeMode.index, 0);
-    const ci = CartItem(productId: 'x', quantity: 1);
+    final ci = CartItem(productId: 'x', quantity: 1);
     expect(ci.quantity, 1);
     const cs = CartSummary(itemsCount: 0, productsTotal: 0, discount: 0, deliveryFee: 0, total: 0);
     expect(cs.total, 0);
