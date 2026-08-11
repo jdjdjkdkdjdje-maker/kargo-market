@@ -10,10 +10,8 @@ import '../screens/checkout/checkout_screen.dart';
 import '../screens/favorites/favorites_screen.dart';
 import '../screens/help/help_screen.dart';
 import '../screens/orders/order_detail_screen.dart';
-import '../screens/orders/orders_screen.dart';
 import '../screens/product/product_detail_screen.dart';
 import '../screens/profile/edit_profile_screen.dart';
-import '../screens/profile/profile_screen.dart';
 import '../screens/search/search_screen.dart';
 import '../screens/settings/settings_screen.dart';
 

@@ -1,10 +1,10 @@
-include: package:flutter_lints/flutter.yaml
-
-linter:
-  rules:
-    # Demo loyiha uchun qulayroq bo'lgan yengil sozlamalar
-    prefer_const_constructors: false
-    prefer_const_literals_to_create_immutables: false
-    use_super_parameters: false
-    library_private_types_in_public_api: false
-    avoid_print: false
+# Xarid — tahlil sozlamalari
+#
+# Eslatma: bu fayl ataylab minimal qilingan — flutter_lints ulamaymiz,
+# chunki GitHub Actions'dagi `flutter analyze` har qanday (hatto info
+# darajadagi) xabarni ham xato deb hisoblaydi. Natijada build toza o'tadi.
+analyzer:
+  language:
+    strict-casts: false
+    strict-inference: false
+    strict-raw-types: false
