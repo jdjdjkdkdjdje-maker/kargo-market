@@ -1,0 +1,5 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- INTERNET ruxsati faqat ishlab chiqish (debug) rejimida kerak bo'ladi.
+         Asosiy (release) APKda INTERNET ruxsati YO'Q — ilova 100% oflayn ishlaydi. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+</manifest>
