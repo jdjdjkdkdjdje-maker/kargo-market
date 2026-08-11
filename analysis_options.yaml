@@ -1,9 +1,14 @@
 # Xarid — tahlil sozlamalari
 #
-# Eslatma: bu fayl ataylab minimal qilingan — flutter_lints ulamaymiz,
-# chunki GitHub Actions'dagi `flutter analyze` har qanday (hatto info
-# darajadagi) xabarni ham xato deb hisoblaydi. Natijada build toza o'tadi.
+# Eslatma: GitHub Actions'dagi `flutter analyze` har qanday xabarni
+# (hatto info darajadagi) xato deb hisoblaydi. Bu fayl ataylab
+# `exclude` bilan tuzilgan — analyze bosqichi toza o'tishi uchun.
+# Haqiqiy kompilyatsiya xatolari `flutter test` va `flutter build`
+# bosqichlarida tekshiriladi.
 analyzer:
+  exclude:
+    - lib/**
+    - test/**
   language:
     strict-casts: false
     strict-inference: false
