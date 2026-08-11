@@ -1,0 +1,78 @@
+name: Xarid — APK qurish
+
+on:
+  push:
+    branches: [main, arena/019ff2c5-kargo-market]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    name: Flutter APK build (debug + release)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Reponi olish
+        uses: actions/checkout@v4
+
+      - name: Java 17 o'rnatish
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Flutter o'rnatish
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.32.4'
+          cache: true
+
+      - name: Dependency larni yuklab olish
+        run: flutter pub get
+
+      - name: Kodni tekshirish (analyze)
+        run: flutter analyze
+
+      - name: Testlarni ishga tushirish
+        run: flutter test
+
+      - name: Debug APK qurish
+        run: flutter build apk --debug
+
+      - name: Release APK qurish
+        run: flutter build apk --release
+
+      - name: GitHub Release yaratish (APK bilan)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          RELEASE_TAG="v1.0.0"
+          APKS="build/app/outputs/flutter-apk/app-debug.apk build/app/outputs/flutter-apk/app-release.apk"
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release delete "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --yes
+          fi
+          gh release create "$RELEASE_TAG" $APKS \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Xarid v1.0.0 — Android APK" \
+            --notes "## Xarid — 100% oflayn marketplace
+
+**app-release.apk** — yakuniy versiya (tavsiya etiladi)
+**app-debug.apk** — ishlab chiqish versiyasi
+
+- To'liq oflayn ishlaydi — internet talab qilinmaydi
+- Barcha ma'lumotlar telefon xotirasida saqlanadi
+- 15 ta kategoriya, 44 ta mahsulot
+- Savatcha, buyurtmalar, sevimlilar, profil
+- O'zbek tilidagi interfeys"
+
+      - name: APK larni artifact sifatida saqlash
+        uses: actions/upload-artifact@v4
+        with:
+          name: xarid-apk
+          path: |
+            build/app/outputs/flutter-apk/app-debug.apk
+            build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 90
