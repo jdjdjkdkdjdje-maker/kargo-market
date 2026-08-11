@@ -2,7 +2,7 @@ name: Xarid — APK qurish
 
 on:
   push:
-    branches: [main, arena/019ff2c5-kargo-market]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -44,6 +44,9 @@ jobs:
       - name: Release APK qurish
         run: flutter build apk --release
 
+      - name: APK fayllarni ko'rish
+        run: ls -la build/app/outputs/flutter-apk/
+
       - name: GitHub Release yaratish (APK bilan)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,22 +54,14 @@ jobs:
           set -e
           RELEASE_TAG="v1.0.0"
           APKS="build/app/outputs/flutter-apk/app-debug.apk build/app/outputs/flutter-apk/app-release.apk"
+          NOTES=$'## Xarid — 100% oflayn marketplace\n\n**app-release.apk** — yakuniy (release) versiya, tavsiya etiladi\n**app-debug.apk** — ishlab chiqish (debug) versiyasi\n\n### Imkoniyatlar\n- To\'liq oflayn ishlaydi — internet talab qilinmaydi\n- Barcha ma\'lumotlar telefon xotirasida saqlanadi\n- 15 ta kategoriya, 44 ta mahsulot\n- Savatcha, buyurtmalar, sevimlilar, profil\n- O\'zbek tilidagi interfeys\n- Mahsulotlarni boshqarish (yashirin bo\'lim)'
           if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             gh release delete "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --yes
           fi
           gh release create "$RELEASE_TAG" $APKS \
             --repo "$GITHUB_REPOSITORY" \
             --title "Xarid v1.0.0 — Android APK" \
-            --notes "## Xarid — 100% oflayn marketplace
-
-**app-release.apk** — yakuniy versiya (tavsiya etiladi)
-**app-debug.apk** — ishlab chiqish versiyasi
-
-- To'liq oflayn ishlaydi — internet talab qilinmaydi
-- Barcha ma'lumotlar telefon xotirasida saqlanadi
-- 15 ta kategoriya, 44 ta mahsulot
-- Savatcha, buyurtmalar, sevimlilar, profil
-- O'zbek tilidagi interfeys"
+            --notes "$NOTES"
 
       - name: APK larni artifact sifatida saqlash
         uses: actions/upload-artifact@v4
